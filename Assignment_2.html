@@ -293,7 +293,7 @@
                                                                 return yScale(d.Vehicle_Theft);
                                                             })
                                                             .attr("fill-opacity", function(d) {
-                                                            	return (Math.round(d.Vehicle_Theft / max );
+                                                            	return Math.round(d.Vehicle_Theft / max);
                                                                 //return "rgb(0,0," + (Math.round(d.Vehicle_Theft / max * 255)) + ")";
                                                             })
                                                             .attr("fill", "black");
