@@ -26,7 +26,7 @@
 
 
     <h2>Assignment 2A: Simple SVG stuff</h2>
-
+    <div id="simplestuff"></div>
     <h2>Assignment 2B: One scatter plot and two datasets</h2>
     <button id="2003" value="2003 Crime Data">2003 Crime Data</button>
     <button id="2015" value="2015 Crime Data">2015 Crime Data</button>
@@ -41,7 +41,6 @@
     <p>
     <div id="barchart"></div>
     <hr>
-    <p>
     <p>
     <h2>Assignment 2D: Visualizing geodata</h2>
     <button id="K1" value="K1">K1</button>
@@ -408,8 +407,6 @@
 
             // load data from csv file
             d3.csv("csv_clusters.csv", function(data) {
-
-			
                 // create the circle element an apply attributes to it from data set.
                 svg3.selectAll("circle")
                     .data(data)
@@ -428,7 +425,6 @@
                         return color(d.k1);
                     })
                     .style("opacity", 0.50);
-                
 				update_Centroid(0);
 				});
             
@@ -503,9 +499,10 @@
                         svg3.selectAll("circle").filter(".crime").style("fill", function(d) {
                             return color(d.k6);
                         })
-						update_Centroid(5);
+				update_Centroid(5);
                     }
                 })
+              
         });
     </script>
 </body>
