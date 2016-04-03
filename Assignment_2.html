@@ -142,9 +142,9 @@
                                             console.log(data); //Log the data.
                                             console.log(data2); //Log the data.
                                             //Include other code to execute after successful file load here
-                                            dataset = data;
-                                            dataset2 = data2;
-											dataset3 = data3;
+                                        dataset = data;
+                                        dataset2 = data2;
+					dataset3 = data3;
 											
 											                // create the circle element an apply attributes to it from data set.
                 svg3.selectAll("circle")
@@ -252,13 +252,14 @@
 						.attr("x", w)
 						.attr("y", h-20)
 						.text("Prostitution crimes"); 
+						.attr("fill", "grey");
                                         svg1.append("text")
 						.attr("class", "y label")
 						.attr("text-anchor", "end")
-						.attr("y", 6)
+						.attr("y", padding)
 						.attr("dy", ".75em")
-						//.attr("transform", "rotate(-90)")
 						.text("Vehicle Theft");   
+						.attr("fill", "grey");
 						
                                             /////////// INITIAL HISTOGRAM  /////////
                                             // Defining new scales
