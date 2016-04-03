@@ -66,7 +66,6 @@
 								<button id="K3" value="K3">K3</button>
 								<button id="K4" value="K4">K4</button>
 								<button id="K5" value="K5">K5</button>
-							////////<button id="K6" value="K6">K6</button>/////
 								<p>
 								<div id="area1"></div>
 								<hr>
@@ -396,7 +395,7 @@
                         svg3.selectAll("circle").filter(".crime").style("fill", function(d) {
                             return color(d.k6);
                         })
-						update_Centroid(5);
+						update_Centroid(5); //Centroid data for k=6 was somehow wrong? Hence button removed
                     }
 													 });
                                                     /////////// FUNCTIONS FOR UPDATING CHARTS /////////////
