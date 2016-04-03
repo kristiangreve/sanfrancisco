@@ -293,7 +293,7 @@
                                                                 return yScale(d.Vehicle_Theft);
                                                             })
                                                             .attr("fill-opacity", function(d) {
-                                                            	return Math.round(d.Vehicle_Theft / max);
+                                                            	return d.Vehicle_Theft / max;
                                                                 //return "rgb(0,0," + (Math.round(d.Vehicle_Theft / max * 255)) + ")";
                                                             })
                                                             .attr("fill", "black");
@@ -482,7 +482,8 @@
                                                                     return yScale(d.Vehicle_Theft);
                                                                 })
                                                                 .attr("fill", function(d) { // <-- Down here!
-                                                                    return "rgb(0, 0, " + (Math.round(d.Vehicle_Theft / max * 255)) + ")";
+                                                                    return d.Vehicle_Theft / max;
+                                                                    //return "rgb(0, 0, " + (Math.round(d.Vehicle_Theft / max * 255)) + ")";
                                                                 })
                                                                 .attr("fill-opacity", "0.7");
                                                             //update text labels
