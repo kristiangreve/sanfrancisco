@@ -267,7 +267,7 @@
                                                             .range([padding, h - padding]);
                                                         var yAxisScale = d3.scale.linear()
                                                             .domain([0, max])
-                                                            .range([h - padding, 0]);
+                                                            .range([h - padding, padding]);
                                                         var yAxis = d3.svg.axis()
                                                             .scale(yAxisScale)
                                                             .orient("left")
@@ -286,7 +286,7 @@
                                                                 return xScale(i);
                                                             })
                                                             .attr("y", function(d) {
-                                                                return h - yScale(d.Vehicle_Theft);
+                                                                return yScale(d.Vehicle_Theft);
                                                             })
                                                             .attr("width", xScale.rangeBand())
                                                             .attr("height", function(d) {
