@@ -2,8 +2,8 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>D3: A simple scatterplot with value labels</title>
-		<script type="text/javascript" src="../d3/d3.js"></script>
+		<title>Assignment 2</title>
+		<script src="js/d3.min.js"></script>
 		<style type="text/css">
 		
 		
@@ -24,13 +24,27 @@
 	</head>
 	
 	<body>
+		
+		
 	
-		<p id="2003">Click for 2003 Crime Data </p>
-		<p id="2015">Click for 2015 Crime Data </p>
-		<div id ="area1"></div>
-		<p id="2003_veh">Click for 2003 Vehicle Theft data </p>
-		<p id="2015_veh">Click for 2015 Vehicle Theft Data </p>
-		<div id ="area2"></div>
+	<h2>Assignment 2A: Simple SVG stuff</h2>
+	
+	<h2>Assignment 2B: Scatterplot</h2>
+	<div id="scatterplot"></div>
+    	<button id="2003" value="2003 Crime Data">2003 Crime Data</button>
+    	<button id="2015" value="2015 Crime Data">K2015 Crime Data</button>
+    	<div id="barchart"></div>
+    	<button id="2003" value="2003 Crime Data">2003 Crime Data</button>
+    	<button id="2015" value="2015 Crime Data">K2015 Crime Data</button>
+    	
+    	
+    	
+	//	<p id="2003">Click for 2003 Crime Data </p>
+	//	<p id="2015">Click for 2015 Crime Data </p>
+	//	<div id ="area1"></div>
+	//	<p id="2003_veh">Click for 2003 Vehicle Theft data </p>
+	//	<p id="2015_veh">Click for 2015 Vehicle Theft Data </p>
+	//	<div id ="area2"></div>
 		
 		
 		<script type="text/javascript">
@@ -210,7 +224,7 @@
 ////////// DETECTION OF CLICKS //////////////
 
 			//On click, update with new data			
-			d3.selectAll("p")
+			d3.selectAll("button")
 				.on("click", function() {
 				//See which p was clicked
 				var paragraphID = d3.select(this).attr("id");
