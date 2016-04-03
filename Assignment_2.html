@@ -79,6 +79,7 @@
 								var offset = [1100, 1450];
 								var scale = 200000;
 								var color = d3.scale.category10();
+								//As we had trouble loading a CSV file into an array of arrays within an array (instead it became an object), k centers was simply defined within the code
 								var centroid_list = [[[-122.41803041909377, 37.77427215999907]],
 								 [[-122.41780320059732, 37.78740515602903],
 								  [-122.4182671423892, 37.76058979633723]],
@@ -103,29 +104,7 @@
 								
         // load map data from json
         d3.json("sfpddistricts.json", function(json) {
-            // retrieve center from data set
-            var center = d3.geo.centroid(json);
-            // set projection
-            var projection = d3.geo.mercator().center(center).translate(offset).scale(scale)
-                // define path
-            var path = d3.geo.path()
-                .projection(projection);
-            // create the svg to where the data is applied
-            var svg3 = d3.select("#area1")
-                .append("svg")
-                .attr("width", w_map)
-                .attr("height", h_map);
-            // generate paths for every feature of the json file and set properties of them
-            svg3.selectAll("path")
-                .data(json.features)
-                .enter()
-                .append("path")
-                .attr("d", path)
-                .style("fill", "black")
-                .style("stroke-width", "1")
-                .style("stroke", "white");
 
-			
                                 //Width and height
                                 var w = 800;
                                 var h = 600;
@@ -320,6 +299,28 @@
 					
 /////////////////////// initial SF Map (k clusters)
 		// create the circle element an apply attributes to it from data set.
+		            // retrieve center from data set
+            var center = d3.geo.centroid(json);
+            // set projection
+            var projection = d3.geo.mercator().center(center).translate(offset).scale(scale)
+                // define path
+            var path = d3.geo.path()
+                .projection(projection);
+            // create the svg to where the data is applied
+            var svg3 = d3.select("#area1")
+                .append("svg")
+                .attr("width", w_map)
+                .attr("height", h_map);
+            // generate paths for every feature of the json file and set properties of them
+            svg3.selectAll("path")
+                .data(json.features)
+                .enter()
+                .append("path")
+                .attr("d", path)
+                .style("fill", "black")
+                .style("stroke-width", "1")
+                .style("stroke", "white");
+		
                 svg3.selectAll("circle")
                     .data(dataset3)
                     .enter()
