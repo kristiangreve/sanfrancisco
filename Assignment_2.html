@@ -250,10 +250,10 @@
                                             });
                                             var yScale = d3.scale.linear()
                                                 .domain([0, max])
-                                                .range([0, h]);
-											var yAxisScale = d3.scale.linear()
+                                                .range([padding, h-padding]);
+					var yAxisScale = d3.scale.linear()
                                                 .domain([0, max])
-                                                .range([h, 0]);
+                                                .range([h-padding, padding]);
                                             var yAxis = d3.svg.axis()
                                                 .scale(yAxisScale)
                                                 .orient("left")
