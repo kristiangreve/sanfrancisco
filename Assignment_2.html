@@ -292,10 +292,11 @@
                                                             .attr("height", function(d) {
                                                                 return yScale(d.Vehicle_Theft);
                                                             })
-                                                            .attr("fill", function(d) {
-                                                                return "rgb(0,0," + (Math.round(d.Vehicle_Theft / max * 255)) + ")";
+                                                            .attr("fill-opacity", function(d) {
+                                                            	return (Math.round(d.Vehicle_Theft / max );
+                                                                //return "rgb(0,0," + (Math.round(d.Vehicle_Theft / max * 255)) + ")";
                                                             })
-                                                            .attr("fill-opacity", "0.8");
+                                                            .attr("fill", "black");
                                                         //Append labels in top of rectangels
                                                         svg2.selectAll("text")
                                                             .data(dataset)
