@@ -51,8 +51,8 @@
                 .style("stroke", "white");
 
             // load data from csv file
-            d3.csv("csv_clusters.csv", function(data) {
-            	d3.csv("centroidsnew.csv", function(datacentroid) {
+            d3.csv("http://kristiangreve.github.io/sanfrancisco/csv_clusters.csv", function(data) {
+            	d3.csv("http://kristiangreve.github.io/sanfrancisco/centroidsnew.csv", function(datacentroid) {
             	console.log(datacentroid);
                 // create the circle element an apply attributes to it from data set.
                 svg3.selectAll("circle")
