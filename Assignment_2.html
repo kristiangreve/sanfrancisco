@@ -327,6 +327,16 @@
                                                 .attr("class", "y axis")
                                                 .attr("transform", "translate(" + padding + ",0)")
                                                 .call(yAxis);
+                                            //Add label to y axis
+                                            svg2.append("text")
+						.attr("class", "y label")
+						.attr("text-anchor", "end")
+						.attr("x", padding*2)
+						.attr("y", 10)
+						.attr("dy", ".75em")
+						.text("Vehicle Theft")   
+						.attr("fill", "grey");
+						
                                             ////////// DETECTION OF CLICKS //////////////
                                             //On click, update with new data			
                                             d3.selectAll("button")
