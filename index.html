@@ -1,352 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Assignment 2</title>
-		<script src="d3.min.js"></script>
-		<style type="text/css">
-		
-		
-			.axis path,
-			.axis line {
-				fill: none;
-				stroke: black;
-				shape-rendering: crispEdges;
-			}
-			
-			.axis text {
-				font-family: sans-serif;
-				font-size: 11px;
-			}
 
-			/* No style rules here yet */		
-		</style>
-	</head>
-	
-	<body>
-		
-		
-	
-	<h2>Assignment 2A: Simple SVG stuff</h2>
-	
-	<h2>Assignment 2B: Scatterplot</h2>
-	<div id="scatterplot"></div>
-    	<button id="2003" value="2003 Crime Data">2003 Crime Data</button>
-    	<button id="2015" value="2015 Crime Data">K2015 Crime Data</button>
-    	<div id="barchart"></div>
-    	<button id="2003" value="2003 Crime Data">2003 Crime Data</button>
-    	<button id="2015" value="2015 Crime Data">K2015 Crime Data</button>
-    	
-    	
-    	
-	//	<p id="2003">Click for 2003 Crime Data </p>
-	//	<p id="2015">Click for 2015 Crime Data </p>
-	//	<div id ="area1"></div>
-	//	<p id="2003_veh">Click for 2003 Vehicle Theft data </p>
-	//	<p id="2015_veh">Click for 2015 Vehicle Theft Data </p>
-	//	<div id ="area2"></div>
-		
-		
-		<script type="text/javascript">
-			//Width and height
-			var w = 800;
-			var h = 600;
-			var padding = 50;
+<head>
+    <meta charset="utf-8">
+    <title>Assignment 2</title>
+    <script src="d3.min.js"></script>
+    <style type="text/css">
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+        
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+        /* No style rules here yet */
+    </style>
+</head>
 
-			var dataset;
-			
-/////////// LOAD CSV FILE ///////////
-		d3.csv("data_2003.csv", function(error, data) {
-			d3.csv("data_2015.csv", function(error,data2){
+<body>
 
-			if (error) {  //If error is not null, something went wrong.
-				console.log(error);  //Log the error.
-			} else {      //If no error, the file loaded correctly. Yay!
-				console.log(data);   //Log the data.
-				console.log(data2);   //Log the data.
 
-			//Include other code to execute after successful file load here
-				dataset = data;
-				dataset2 = data2;
-				dataset_total = data.concat(data2);
-			
-/////////// INITIAL SCATTERPLOT /////////
-			//Define our scales
-			var max = d3.max(dataset_total, function(d) { return +d.Vehicle_Theft;} );
-			var yScale = d3.scale.linear()
-				.domain([0,max])
-				.range([h - padding, padding]);
-			
-			var max = d3.max(dataset_total, function(d) { return +d.Prostitution;} );
-			var xScale = d3.scale.linear()
-				.domain([0,max])
-				.range([padding, w - padding*2]);
-				
-			var max = d3.max(dataset_total, function(d) { return +d.Total;} );			
-			var rScale = d3.scale.linear()
-				.domain([0,max])
-				.range([2, 20]);
-			
-			//Define our axis
-			var xAxis = d3.svg.axis()
-                  .scale(xScale)
-                  .orient("bottom")
-				  .ticks(5);
 
-			var yAxis = d3.svg.axis()
-                  .scale(yScale)
-                  .orient("left")
-				  .ticks(5);
+    <h2>Assignment 2A: Simple SVG stuff</h2>
 
-			//Create SVG element
-			var svg1 = d3.select("#area1")
-						.append("svg")
-						.attr("width", w)
-						.attr("height", h);
-		
-			//create circle elements
-			svg1.selectAll("circle")        
-				.data(dataset)
-				.enter()
-				.append("circle")
-				
-			   .attr("cx", function(d) {
-			   		return xScale(d.Prostitution);
-			   })
-			   .attr("cy", function(d) {
-			   		return yScale(d.Vehicle_Theft);
-			   })
-			   .attr("r", function(d) {
-			   		return rScale(d.Total);
-			   })
-				.attr("fill", "grey")
-				.attr("fill-opacity", "0.4")
-			;
-			
-			//create labels
-			svg1.selectAll("text")
-			   .data(dataset)
-			   .enter()
-			   .append("text")
-			   .text(function(d) {
-			   		return d.District
-			   })
-			   .attr("x", function(d) {
-			   		return xScale(d.Prostitution)+10;
-			   })
-			   .attr("y", function(d) {
-			   		return yScale(d.Vehicle_Theft);
-			   })
-			   .attr("font-family", "sans-serif")
-			   .attr("font-size", "11px")
-			   .attr("fill", "black");
-		
-			//Create X & Y axis
-			svg1.append("g")
-				.attr("class", "x axis")
-				.attr("transform", "translate(0," + (h - padding) + ")")
-				.call(xAxis);
-				
-			svg1.append("g")
-				.attr("class", "y axis")
-				.attr("transform", "translate(" + padding + ",0)")
-				.call(yAxis);
-			
+    <h2>Assignment 2B: Scatterplot</h2>
+    <div id="scatterplot"></div>
+    <button id="2003" value="2003 Crime Data">2003 Crime Data</button>
+    <button id="2015" value="2015 Crime Data">2015 Crime Data</button>
+    <div id="barchart"></div>
+    <button id="2003" value="2003 Crime Data">2003 Crime Data</button>
+    <button id="2015" value="2015 Crime Data">2015 Crime Data</button>
 
-/////////// INITIAL HISTOGRAM  /////////
-			// Defining new scales
-			var xScale = d3.scale.ordinal()
-				.domain(d3.range(dataset.length))
-				.rangeRoundBands([padding,w-padding],0.05);
-			
-			var max = d3.max(dataset_total, function(d) { return +d.Vehicle_Theft;} );
-			var yScale = d3.scale.linear()
-				.domain([0,max])
-				.range([0,h]);
-			
-			var yAxis = d3.svg.axis()
-                  .scale(yScale)
-                  .orient("left")
-				  .ticks(5);				
-			
-			//Create new SVG element
-			var svg2 = d3.select("#area2")
-						.append("svg")
-						.attr("width", w)
-						.attr("height", h);
-		
-			//Create rectangles
-			svg2.selectAll("rect")        
-				.data(dataset)
-				.enter()
-				.append("rect")
-			   .attr("x", function(d,i) {
-			   		return xScale(i);
-			   })
-			   .attr("y", function(d){
-					return h - yScale(d.Vehicle_Theft);
-				})
-				.attr("width", xScale.rangeBand())
-				.attr("height", function(d){
-					return yScale(d.Vehicle_Theft);
-				})
-				.attr("fill",function(d){
-					return "rgb(0,0," + (Math.round(d.Vehicle_Theft/max*255))+")";
-					
-				})
-				.attr("fill-opacity", "0.8");
-			
-			//Append labels in top of rectangels
-			svg2.selectAll("text")
-			   .data(dataset)
-			   .enter()
-			   .append("text")
-			   .text(function(d) {
-			   		return d.District
-			   })
-			   .attr("text-anchor", "middle")
-			   .attr("x", function(d,i) {
-			   		return xScale(i)+xScale.rangeBand() /2;
-			   })
-			   .attr("y", function(d) {
-			   		return h - yScale(d.Vehicle_Theft)+14;
-			   })
-			   .attr("font-family", "sans-serif")
-			   .attr("font-size", "11px")
-			   .attr("fill", "white");
-			
-			//Create y axis
-			svg2.append("g")
-				.attr("class", "y axis")
-				.attr("transform", "translate(" + padding + ",0)")
-				.call(yAxis);
-			
-////////// DETECTION OF CLICKS //////////////
+    <script type="text/javascript">
+        //Width and height
+        var w = 800;
+        var h = 600;
+        var padding = 50;
 
-			//On click, update with new data			
-			d3.selectAll("button")
-				.on("click", function() {
-				//See which p was clicked
-				var paragraphID = d3.select(this).attr("id");
-				
-				if (paragraphID == "2015"){
-					updateCircle(dataset2);
-				}
-				if (paragraphID == "2003"){
-					updateCircle(dataset);
-				}
-				if (paragraphID == "2015_veh") { //veh for vehicle theft
-					updateBars(dataset2);
-				}
-				if (paragraphID == "2003_veh") { //veh for vehicle theft
-					updateBars(dataset);
-				}	
+        var dataset;
 
-/////////// FUNCTIONS FOR UPDATING CHARTS /////////////
-				
-/////////// CIRCLE UPDATE ////////////
-			function updateCircle(data_input){
-			
-			//Redefining my scales (since they have same var names as the bar chart...)
-			var max = d3.max(dataset_total, function(d) { return +d.Vehicle_Theft;} );
-			var yScale = d3.scale.linear()
-				.domain([0,max])
-				.range([h - padding, padding]);
-			
-			var max = d3.max(dataset_total, function(d) { return +d.Prostitution;} );
-			var xScale = d3.scale.linear()
-				.domain([0,max])
-				.range([padding, w - padding*2]);
-				
-				
-			//Redraw for new location
-			svg1.selectAll("circle")
-				.data(data_input)
-				.transition()
-				.duration(1000)
-				.each("start", function() {      // <-- Executes at start of transition
-					d3.select(this)
-						.attr("fill", "black")
-						.attr("r", 3);
-					})
-				.attr("cx", function(d) {
-					return xScale(d.Prostitution);
-				})
-				.attr("cy", function(d) {
-					return yScale(d.Vehicle_Theft);
-				})
-				.transition()
-				.duration(1000)
-				.attr("r", function(d) {
-					return rScale(d.Total);
-				})
-				.attr("fill","grey")
-				.attr("fill-opacity", "0.4")
-				;
-				
-			//update text labels
-			svg1.selectAll("text")
-				.data(data_input)
-				.transition()
-				.duration(1000)
-				.attr("x", function(d) {
-					return xScale(d.Prostitution)+10;
-				})
-				.attr("y", function(d) {
-					return yScale(d.Vehicle_Theft);
-				})
-			;
-			}		
+        /////////// LOAD CSV FILE ///////////
+        d3.csv("data_2003.csv", function(error, data) {
+            d3.csv("data_2015.csv", function(error, data2) {
 
-/////////// HISTOGRAM UPDATE ////////////			
-			function updateBars(data_input){
-			//Update all rectangles
-			// Since latest globally defined scales are for histogram, no need to redefine.
-			svg2.selectAll("rect")
-				.data(data_input)
-				.transition()
-				.delay(function(d, i) {
-					return i / data_input.length * 500;   // <-- Where the magic happens
-				})
-				.duration(1000)
-				.attr("y", function(d) {
-					return h - yScale(d.Vehicle_Theft);
-				})
-				.attr("height", function(d) {
-					return yScale(d.Vehicle_Theft);
-				})
-				.attr("fill", function(d) {   // <-- Down here!
-					return "rgb(0, 0, " + (Math.round(d.Vehicle_Theft/max*255)) + ")";
-				})
-				.attr("fill-opacity", "0.7");
-	
-				
-			//update text labels
-			svg2.selectAll("text")
-				.data(data_input)
-				.transition()
-				.delay(function(d, i) {
-					return i / data_input.length * 500;   // <-- Where the magic happens
-				})
-				.duration(1000)
-				.attr("x", function(d,i) {
-					return xScale(i) + xScale.rangeBand() /2;
-				})
-				.attr("y", function(d) {
-					return h - yScale(d.Vehicle_Theft)+14;
-				})
-			;
-			}
-				
-			});
-			
-		} // All above within CSV statement of sucessfull load (else)
-			
+                if (error) { //If error is not null, something went wrong.
+                    console.log(error); //Log the error.
+                } else { //If no error, the file loaded correctly. Yay!
+                    console.log(data); //Log the data.
+                    console.log(data2); //Log the data.
 
-	});
-});
-	
-	
-		</script>
-	</body>
+                    //Include other code to execute after successful file load here
+                    dataset = data;
+                    dataset2 = data2;
+                    dataset_total = data.concat(data2);
+
+                    /////////// INITIAL SCATTERPLOT /////////
+                    //Define our scales
+                    var max = d3.max(dataset_total, function(d) {
+                        return +d.Vehicle_Theft;
+                    });
+                    var yScale = d3.scale.linear()
+                        .domain([0, max])
+                        .range([h - padding, padding]);
+
+                    var max = d3.max(dataset_total, function(d) {
+                        return +d.Prostitution;
+                    });
+                    var xScale = d3.scale.linear()
+                        .domain([0, max])
+                        .range([padding, w - padding * 2]);
+
+                    var max = d3.max(dataset_total, function(d) {
+                        return +d.Total;
+                    });
+                    var rScale = d3.scale.linear()
+                        .domain([0, max])
+                        .range([2, 20]);
+
+                    //Define our axis
+                    var xAxis = d3.svg.axis()
+                        .scale(xScale)
+                        .orient("bottom")
+                        .ticks(5);
+
+                    var yAxis = d3.svg.axis()
+                        .scale(yScale)
+                        .orient("left")
+                        .ticks(5);
+
+                    //Create SVG element
+                    var svg1 = d3.select("#scatterplot")
+                        .append("svg")
+                        .attr("width", w)
+                        .attr("height", h);
+
+                    //create circle elements
+                    svg1.selectAll("circle")
+                        .data(dataset)
+                        .enter()
+                        .append("circle")
+
+                    .attr("cx", function(d) {
+                            return xScale(d.Prostitution);
+                        })
+                        .attr("cy", function(d) {
+                            return yScale(d.Vehicle_Theft);
+                        })
+                        .attr("r", function(d) {
+                            return rScale(d.Total);
+                        })
+                        .attr("fill", "grey")
+                        .attr("fill-opacity", "0.4");
+
+                    //create labels
+                    svg1.selectAll("text")
+                        .data(dataset)
+                        .enter()
+                        .append("text")
+                        .text(function(d) {
+                            return d.District
+                        })
+                        .attr("x", function(d) {
+                            return xScale(d.Prostitution) + 10;
+                        })
+                        .attr("y", function(d) {
+                            return yScale(d.Vehicle_Theft);
+                        })
+                        .attr("font-family", "sans-serif")
+                        .attr("font-size", "11px")
+                        .attr("fill", "black");
+
+                    //Create X & Y axis
+                    svg1.append("g")
+                        .attr("class", "x axis")
+                        .attr("transform", "translate(0," + (h - padding) + ")")
+                        .call(xAxis);
+
+                    svg1.append("g")
+                        .attr("class", "y axis")
+                        .attr("transform", "translate(" + padding + ",0)")
+                        .call(yAxis);
+
+
+                    /////////// INITIAL HISTOGRAM  /////////
+                    // Defining new scales
+                    var xScale = d3.scale.ordinal()
+                        .domain(d3.range(dataset.length))
+                        .rangeRoundBands([padding, w - padding], 0.05);
+
+                    var max = d3.max(dataset_total, function(d) {
+                        return +d.Vehicle_Theft;
+                    });
+                    var yScale = d3.scale.linear()
+                        .domain([0, max])
+                        .range([0, h]);
+
+                    var yAxis = d3.svg.axis()
+                        .scale(yScale)
+                        .orient("left")
+                        .ticks(5);
+
+                    //Create new SVG element
+                    var svg2 = d3.select("#barchart")
+                        .append("svg")
+                        .attr("width", w)
+                        .attr("height", h);
+
+                    //Create rectangles
+                    svg2.selectAll("rect")
+                        .data(dataset)
+                        .enter()
+                        .append("rect")
+                        .attr("x", function(d, i) {
+                            return xScale(i);
+                        })
+                        .attr("y", function(d) {
+                            return h - yScale(d.Vehicle_Theft);
+                        })
+                        .attr("width", xScale.rangeBand())
+                        .attr("height", function(d) {
+                            return yScale(d.Vehicle_Theft);
+                        })
+                        .attr("fill", function(d) {
+                            return "rgb(0,0," + (Math.round(d.Vehicle_Theft / max * 255)) + ")";
+
+                        })
+                        .attr("fill-opacity", "0.8");
+
+                    //Append labels in top of rectangels
+                    svg2.selectAll("text")
+                        .data(dataset)
+                        .enter()
+                        .append("text")
+                        .text(function(d) {
+                            return d.District
+                        })
+                        .attr("text-anchor", "middle")
+                        .attr("x", function(d, i) {
+                            return xScale(i) + xScale.rangeBand() / 2;
+                        })
+                        .attr("y", function(d) {
+                            return h - yScale(d.Vehicle_Theft) + 14;
+                        })
+                        .attr("font-family", "sans-serif")
+                        .attr("font-size", "11px")
+                        .attr("fill", "white");
+
+                    //Create y axis
+                    svg2.append("g")
+                        .attr("class", "y axis")
+                        .attr("transform", "translate(" + padding + ",0)")
+                        .call(yAxis);
+
+                    ////////// DETECTION OF CLICKS //////////////
+
+                    //On click, update with new data			
+                    d3.selectAll("button")
+                        .on("click", function() {
+                            //See which p was clicked
+                            var paragraphID = d3.select(this).attr("id");
+
+                            if (paragraphID == "2015") {
+                                updateCircle(dataset2);
+                            }
+                            if (paragraphID == "2003") {
+                                updateCircle(dataset);
+                            }
+                            if (paragraphID == "2015_veh") { //veh for vehicle theft
+                                updateBars(dataset2);
+                            }
+                            if (paragraphID == "2003_veh") { //veh for vehicle theft
+                                updateBars(dataset);
+                            }
+
+                            /////////// FUNCTIONS FOR UPDATING CHARTS /////////////
+
+                            /////////// CIRCLE UPDATE ////////////
+                            function updateCircle(data_input) {
+
+                                //Redefining my scales (since they have same var names as the bar chart...)
+                                var max = d3.max(dataset_total, function(d) {
+                                    return +d.Vehicle_Theft;
+                                });
+                                var yScale = d3.scale.linear()
+                                    .domain([0, max])
+                                    .range([h - padding, padding]);
+
+                                var max = d3.max(dataset_total, function(d) {
+                                    return +d.Prostitution;
+                                });
+                                var xScale = d3.scale.linear()
+                                    .domain([0, max])
+                                    .range([padding, w - padding * 2]);
+
+
+                                //Redraw for new location
+                                svg1.selectAll("circle")
+                                    .data(data_input)
+                                    .transition()
+                                    .duration(1000)
+                                    .each("start", function() { // <-- Executes at start of transition
+                                        d3.select(this)
+                                            .attr("fill", "black")
+                                            .attr("r", 3);
+                                    })
+                                    .attr("cx", function(d) {
+                                        return xScale(d.Prostitution);
+                                    })
+                                    .attr("cy", function(d) {
+                                        return yScale(d.Vehicle_Theft);
+                                    })
+                                    .transition()
+                                    .duration(1000)
+                                    .attr("r", function(d) {
+                                        return rScale(d.Total);
+                                    })
+                                    .attr("fill", "grey")
+                                    .attr("fill-opacity", "0.4");
+
+                                //update text labels
+                                svg1.selectAll("text")
+                                    .data(data_input)
+                                    .transition()
+                                    .duration(1000)
+                                    .attr("x", function(d) {
+                                        return xScale(d.Prostitution) + 10;
+                                    })
+                                    .attr("y", function(d) {
+                                        return yScale(d.Vehicle_Theft);
+                                    });
+                            }
+
+                            /////////// HISTOGRAM UPDATE ////////////			
+                            function updateBars(data_input) {
+                                //Update all rectangles
+                                // Since latest globally defined scales are for histogram, no need to redefine.
+                                svg2.selectAll("rect")
+                                    .data(data_input)
+                                    .transition()
+                                    .delay(function(d, i) {
+                                        return i / data_input.length * 500; // <-- Where the magic happens
+                                    })
+                                    .duration(1000)
+                                    .attr("y", function(d) {
+                                        return h - yScale(d.Vehicle_Theft);
+                                    })
+                                    .attr("height", function(d) {
+                                        return yScale(d.Vehicle_Theft);
+                                    })
+                                    .attr("fill", function(d) { // <-- Down here!
+                                        return "rgb(0, 0, " + (Math.round(d.Vehicle_Theft / max * 255)) + ")";
+                                    })
+                                    .attr("fill-opacity", "0.7");
+
+
+                                //update text labels
+                                svg2.selectAll("text")
+                                    .data(data_input)
+                                    .transition()
+                                    .delay(function(d, i) {
+                                        return i / data_input.length * 500; // <-- Where the magic happens
+                                    })
+                                    .duration(1000)
+                                    .attr("x", function(d, i) {
+                                        return xScale(i) + xScale.rangeBand() / 2;
+                                    })
+                                    .attr("y", function(d) {
+                                        return h - yScale(d.Vehicle_Theft) + 14;
+                                    });
+                            }
+
+                        });
+
+                } // All above within CSV statement of sucessfull load (else)
+
+
+            });
+        });
+    </script>
+</body>
+
 </html>
