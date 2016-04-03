@@ -318,7 +318,7 @@
                                                         //Create y axis
                                                         svg2.append("g")
                                                             .attr("class", "y axis")
-                                                            .attr("transform", "translate(" + padding + ",0)")
+                                                            .attr("transform", "translate(" + 0 + ",0)")
                                                             .call(yAxis);
                                                         //Add label to y axis
                                                         svg2.append("text")
@@ -485,7 +485,7 @@
                                                                     return d.Vehicle_Theft / max;
                                                                     //return "rgb(0, 0, " + (Math.round(d.Vehicle_Theft / max * 255)) + ")";
                                                                 })
-                                                                .attr("fill-opacity", "0.7");
+                                                                .attr("fill", "black");
                                                             //update text labels
                                                             svg2.selectAll("text")
                                                                 .data(data_input)
