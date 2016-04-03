@@ -267,7 +267,7 @@
                                                             .range([padding, h - padding]);
                                                         var yAxisScale = d3.scale.linear()
                                                             .domain([0, max])
-                                                            .range([h - padding, padding]);
+                                                            .range([h - padding, 0]);
                                                         var yAxis = d3.svg.axis()
                                                             .scale(yAxisScale)
                                                             .orient("left")
