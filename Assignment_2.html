@@ -286,7 +286,7 @@
                                                                 return xScale(i);
                                                             })
                                                             .attr("y", function(d) {
-                                                                return yScale(d.Vehicle_Theft);
+                                                                return (h-padding)-yScale(d.Vehicle_Theft);
                                                             })
                                                             .attr("width", xScale.rangeBand())
                                                             .attr("height", function(d) {
