@@ -146,26 +146,7 @@
                                         dataset2 = data2;
 					dataset3 = data3;
 											
-											                // create the circle element an apply attributes to it from data set.
-                svg3.selectAll("circle")
-                    .data(dataset3)
-                    .enter()
-                    .append("circle")
-                    .attr("class", "crime")
-                    .attr("cx", function(d) {
-                        return projection([d.lon, d.lat])[0];
-                    })
-                    .attr("cy", function(d) {
-                        return projection([d.lon, d.lat])[1];
-                    })
-                    // determine color of data point dependent on cluster
-                    .attr("r", 3)
-                    .style("fill", function(d) {
-                        return color(d.k1);
-                    })
-                    .style("opacity", 0.50);
-                
-				update_Centroid(0);
+
 				//});
 											
                                             dataset_total = data.concat(data2);
@@ -336,6 +317,30 @@
 						.attr("dy", ".75em")
 						.text("Vehicle Theft")   
 						.attr("fill", "grey");
+					
+/////////////////////// initial SF Map (k clusters)
+		// create the circle element an apply attributes to it from data set.
+                svg3.selectAll("circle")
+                    .data(dataset3)
+                    .enter()
+                    .append("circle")
+                    .attr("class", "crime")
+                    .attr("cx", function(d) {
+                        return projection([d.lon, d.lat])[0];
+                    })
+                    .attr("cy", function(d) {
+                        return projection([d.lon, d.lat])[1];
+                    })
+                    // determine color of data point dependent on cluster
+                    .attr("r", 3)
+                    .style("fill", function(d) {
+                        return color(d.k1);
+                    })
+                    .style("opacity", 0.50);
+                
+                // place centroid
+		update_Centroid(0);
+					
 						
                                             ////////// DETECTION OF CLICKS //////////////
                                             //On click, update with new data			
