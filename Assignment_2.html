@@ -104,7 +104,26 @@
 								
         // load map data from json
         d3.json("sfpddistricts.json", function(json) {
-
+	     var center = d3.geo.centroid(json);
+            // set projection
+            var projection = d3.geo.mercator().center(center).translate(offset).scale(scale)
+                // define path
+            var path = d3.geo.path()
+                .projection(projection);
+            // create the svg to where the data is applied
+            var svg3 = d3.select("#area1")
+                .append("svg")
+                .attr("width", w_map)
+                .attr("height", h_map);
+            // generate paths for every feature of the json file and set properties of them
+            svg3.selectAll("path")
+                .data(json.features)
+                .enter()
+                .append("path")
+                .attr("d", path)
+                .style("fill", "black")
+                .style("stroke-width", "1")
+                .style("stroke", "white");
                                 //Width and height
                                 var w = 800;
                                 var h = 600;
@@ -300,26 +319,7 @@
 /////////////////////// initial SF Map (k clusters)
 		// create the circle element an apply attributes to it from data set.
 		            // retrieve center from data set
-            var center = d3.geo.centroid(json);
-            // set projection
-            var projection = d3.geo.mercator().center(center).translate(offset).scale(scale)
-                // define path
-            var path = d3.geo.path()
-                .projection(projection);
-            // create the svg to where the data is applied
-            var svg3 = d3.select("#area1")
-                .append("svg")
-                .attr("width", w_map)
-                .attr("height", h_map);
-            // generate paths for every feature of the json file and set properties of them
-            svg3.selectAll("path")
-                .data(json.features)
-                .enter()
-                .append("path")
-                .attr("d", path)
-                .style("fill", "black")
-                .style("stroke-width", "1")
-                .style("stroke", "white");
+
 		
                 svg3.selectAll("circle")
                     .data(dataset3)
