@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>SF MAP</title>
+    <script type="text/javascript" src="../d3/d3.v3.js"></script>
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body>
+    <div id="area1"></div>
+    <button id="K1" value="K1">K1</button>
+    <button id="K2" value="K2">K2</button>
+    <button id="K3" value="K3">K3</button>
+    <button id="K4" value="K4">K4</button>
+    <button id="K5" value="K5">K5</button>
+    <button id="K6" value="K6">K6</button>
+
+    <script type="text/javascript">
+        // set dimensions and color palette for plot
+        var w = 1200;
+        var h = 730;
+        var offset = [1830, 1650];
+        var scale = 250000;
+        var color = d3.scale.category10();
+        // load map data from json
+        d3.json("sfpddistricts.json", function(json) {
+            // retrieve center from data set
+            var center = d3.geo.centroid(json);
+            // set projection
+            var projection = d3.geo.mercator().center(center).translate(offset).scale(scale)
+                // define path
+            var path = d3.geo.path()
+                .projection(projection);
+            // create the svg to where the data is applied
+            var svg3 = d3.select("#area1")
+                .append("svg")
+                .attr("width", w)
+                .attr("height", h);
+            // generate paths for every feature of the json file and set properties of them
+            svg3.selectAll("path")
+                .data(json.features)
+                .enter()
+                .append("path")
+                .attr("d", path)
+                .style("fill", "black")
+                .style("stroke-width", "1")
+                .style("stroke", "white");
+
+            // load data from csv file
+            d3.csv("csv_clusters.csv", function(data) {
+            	d3.csv("centroidsnew.csv", function(datacentroid) {
+            	console.log(datacentroid);
+                // create the circle element an apply attributes to it from data set.
+                svg3.selectAll("circle")
+                    .data(data)
+                    .enter()
+                    .append("circle")
+                    .attr("class", "crime")
+                    .attr("cx", function(d) {
+                        return projection([d.lon, d.lat])[0];
+                    })
+                    .attr("cy", function(d) {
+                        return projection([d.lon, d.lat])[1];
+                    })
+                    // determine color of data point dependent on cluster
+                    .attr("r", 3)
+                    .style("fill", function(d) {
+                        return color(d.k1);
+                    })
+                    .style("opacity", 0.50);
+                
+                svg3.selectAll("circle").filter(".centroid")
+                    .data(datacentroid)
+                    .enter()
+                    .append("circle")
+                    .attr("class", "centroid")
+                    .attr("cx", function(d) {
+                        return projection([d.lon, d.lat])[0];
+                    })
+                    .attr("cy", function(d) {
+                        return projection([d.lon, d.lat])[1];
+                    })
+                    
+                    // color
+                    .attr("r", 10)
+					.style("fill", "none")
+					.attr("stroke", "white")
+					.attr("stroke-width",2)
+                    .style("opacity", 1.00);
+            });
+            
+            
+            
+            // detect button click and plot diffrenent k values.
+            d3.selectAll("button")
+                .on("click", function() {
+                    //See which p was clicked
+                    var k_value = d3.select(this).attr("id");
+                    
+                    svg3.selectAll("circle")
+                    
+ 					if (k_value == "K2") {
+                        svg3.selectAll("circle").filter(".crime").style("fill", function(d) {
+                            return color(d.k1);
+                        })
+                    }
+                        
+                    if (k_value == "K2") {
+                        svg3.selectAll("circle").filter(".crime").style("fill", function(d) {
+                            return color(d.k2);
+                        })
+                    }
+                    if (k_value == "K3") {
+                        svg3.selectAll("circle").filter(".crime").style("fill", function(d) {
+                            return color(d.k3);
+                        })
+                    }
+                    if (k_value == "K4") {
+                        svg3.selectAll("circle").filter(".crime").style("fill", function(d) {
+                            return color(d.k4);
+                        })
+                    }
+                    if (k_value == "K5") {
+                        svg3.selectAll("circle").filter(".crime").style("fill", function(d) {
+                            return color(d.k5);
+                        })
+                    }
+                    if (k_value == "K6") {
+                        svg3.selectAll("circle").filter(".crime").style("fill", function(d) {
+                            return color(d.k6);
+                        })
+                    }
+                })
+
+        });
+        });
+    </script>
+</body>
+
+</html>
