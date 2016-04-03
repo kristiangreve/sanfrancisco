@@ -481,11 +481,12 @@
                                                                 .attr("height", function(d) {
                                                                     return yScale(d.Vehicle_Theft);
                                                                 })
-                                                                .attr("fill", function(d) { // <-- Down here!
+                                                                .attr("fill-opacity", function(d) { // <-- Down here!
                                                                     return d.Vehicle_Theft / max;
                                                                     //return "rgb(0, 0, " + (Math.round(d.Vehicle_Theft / max * 255)) + ")";
                                                                 })
                                                                 .attr("fill", "black");
+                                                                
                                                             //update text labels
                                                             svg2.selectAll("text")
                                                                 .data(data_input)
